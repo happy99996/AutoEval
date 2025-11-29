@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { VehicleData, AnalysisResult, GroundingSource } from "../types";
 
 // Initialize the client
@@ -153,7 +153,8 @@ export const fetchDeepReasoning = async (vehicle: VehicleData, marketContext: st
 
     if (response.text) {
         try {
-            return JSON.parse(response.text);
+            const cleanText = response.text.replace(/```json\n?|```/g, '').trim();
+            return JSON.parse(cleanText);
         } catch (e) {
             console.error("Failed to parse JSON from reasoning model", e);
             throw new Error("Analysis failed format check.");
