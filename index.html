@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AutoEval AI - Vehicle Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -15,16 +15,16 @@
               display: ['Exo+2', 'sans-serif'],
             },
             colors: {
-              background: '#050505', // Ultra dark
+              background: '#050505',
               surface: '#0a0a0a',    
-              primary: '#ffffff',    // White primary
-              secondary: '#a1a1aa',  // Zinc 400
-              accent: '#27272a',     // Zinc 800
+              primary: '#ffffff',
+              secondary: '#a1a1aa',
+              accent: '#27272a',
             },
             animation: {
-              'fade-in': 'fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'fade-in': 'fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'slide-up': 'slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'progress': 'progress 2s ease-in-out infinite',
             },
             keyframes: {
               fadeIn: {
@@ -32,8 +32,12 @@
                 '100%': { opacity: '1' },
               },
               slideUp: {
-                '0%': { transform: 'translateY(40px)', opacity: '0' },
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
                 '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              progress: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' }
               }
             }
           }
@@ -43,27 +47,23 @@
     <style>
       body {
         background-color: #050505;
-        color: #e4e4e7; /* Zinc 200 */
+        color: #e4e4e7;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
-        /* Subtle ambient spotlight */
-        background-image: radial-gradient(circle at 50% 0%, #18181b 0%, #050505 60%);
+        /* Ambient light, barely visible */
+        background-image: radial-gradient(circle at 50% -20%, #1a1a1a 0%, #050505 50%);
         background-attachment: fixed;
       }
       
-      /* Minimalist Scrollbar */
       ::-webkit-scrollbar {
-        width: 4px;
+        width: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: transparent; 
+        background: #050505; 
       }
       ::-webkit-scrollbar-thumb {
         background: #27272a; 
-        border-radius: 2px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #3f3f46; 
+        border-radius: 3px;
       }
 
       ::selection {
@@ -73,16 +73,14 @@
 
       /* Ultra Minimal Utilities */
       .matte-card {
-        background-color: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        background-color: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.4s ease;
       }
       
       .matte-card:hover {
-        background-color: rgba(255, 255, 255, 0.04);
-        border-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.01);
       }
       
       .input-minimal {
