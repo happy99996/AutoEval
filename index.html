@@ -15,20 +15,16 @@
               display: ['Exo 2', 'sans-serif'],
             },
             colors: {
-              background: '#09090b', // Zinc 950
-              surface: '#18181b',    // Zinc 900
-              card: '#27272a',       // Zinc 800
-              primary: '#3b82f6',    // Blue 500
+              background: '#050505', // Ultra dark
+              surface: '#0a0a0a',    
+              primary: '#ffffff',    // White primary
               secondary: '#a1a1aa',  // Zinc 400
-              accent: '#f4f4f5',     // Zinc 100
-              success: '#10b981',    // Emerald 500
-              warning: '#f59e0b',    // Amber 500
-              danger: '#ef4444',     // Red 500
+              accent: '#27272a',     // Zinc 800
             },
             animation: {
-              'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'fade-in': 'fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             },
             keyframes: {
               fadeIn: {
@@ -36,7 +32,7 @@
                 '100%': { opacity: '1' },
               },
               slideUp: {
-                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '0%': { transform: 'translateY(40px)', opacity: '0' },
                 '100%': { transform: 'translateY(0)', opacity: '1' },
               }
             }
@@ -46,50 +42,58 @@
     </script>
     <style>
       body {
-        background-color: #09090b;
-        color: #f4f4f5;
+        background-color: #050505;
+        color: #e4e4e7; /* Zinc 200 */
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
+        /* Subtle ambient spotlight */
+        background-image: radial-gradient(circle at 50% 0%, #18181b 0%, #050505 60%);
+        background-attachment: fixed;
       }
       
       /* Minimalist Scrollbar */
       ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+        width: 4px;
       }
       ::-webkit-scrollbar-track {
         background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #3f3f46; 
-        border-radius: 3px;
+        background: #27272a; 
+        border-radius: 2px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #52525b; 
+        background: #3f3f46; 
       }
 
-      /* Utility classes for the new design */
+      ::selection {
+        background: #ffffff;
+        color: #000000;
+      }
+
+      /* Ultra Minimal Utilities */
       .matte-card {
-        background-color: #18181b; /* Zinc 900 */
-        border: 1px solid #27272a; /* Zinc 800 */
-        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       }
       
       .matte-card:hover {
-        border-color: #3f3f46; /* Zinc 700 */
+        background-color: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.1);
         transform: translateY(-2px);
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
       }
       
       .input-minimal {
-        background-color: #09090b;
-        border: 1px solid #27272a;
-        transition: all 0.2s ease;
+        background-color: transparent;
+        border-bottom: 1px solid #27272a;
+        transition: all 0.3s ease;
       }
       
       .input-minimal:focus {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 1px #3b82f6;
+        border-color: #ffffff;
+        outline: none;
       }
     </style>
 <script type="importmap">

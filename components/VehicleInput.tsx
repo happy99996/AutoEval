@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { VehicleData } from '../types';
-import { ArrowRight, Search } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface Props {
   onAnalyze: (data: VehicleData) => void;
@@ -31,17 +31,16 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
     }));
   };
 
-  // Minimalist Input Style
-  const inputContainerClass = "group bg-background rounded-xl px-4 py-3 border border-zinc-800 focus-within:border-zinc-600 focus-within:ring-1 focus-within:ring-zinc-600 transition-all duration-200";
-  const labelClass = "block text-[10px] text-zinc-500 uppercase font-bold tracking-wider mb-0.5 group-focus-within:text-primary transition-colors";
-  const inputClass = "w-full bg-transparent border-none p-0 text-white font-medium focus:ring-0 placeholder-zinc-700";
+  // Modern Minimal Input Style
+  const inputContainerClass = "relative group";
+  const labelClass = "block text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-2 group-focus-within:text-white transition-colors duration-300";
+  const inputClass = "w-full bg-transparent border-b border-zinc-800 py-3 text-lg md:text-xl font-light text-white focus:outline-none focus:border-white placeholder-zinc-800 transition-all duration-300";
 
   return (
-    <div className={`bg-surface border border-zinc-800 rounded-3xl p-6 md:p-8 shadow-2xl transition-all duration-700 ${isLoading ? 'opacity-50 blur-sm pointer-events-none' : 'opacity-100'}`}>
+    <div className={`transition-all duration-700 ${isLoading ? 'opacity-30 blur-sm pointer-events-none' : 'opacity-100'}`}>
       
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <form onSubmit={handleSubmit} className="w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-8">
             
             <div className={inputContainerClass}>
               <label className={labelClass}>Manufacturer</label>
@@ -49,7 +48,7 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
                 required
                 type="text"
                 name="make"
-                placeholder="e.g. Porsche"
+                placeholder="Porsche"
                 value={formData.make}
                 onChange={handleChange}
                 className={inputClass}
@@ -62,7 +61,7 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
                 required
                 type="text"
                 name="model"
-                placeholder="e.g. 911 Carrera"
+                placeholder="911 Carrera"
                 value={formData.model}
                 onChange={handleChange}
                 className={inputClass}
@@ -89,27 +88,28 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
                 name="fuelType"
                 value={formData.fuelType}
                 onChange={handleChange}
-                className={`${inputClass} cursor-pointer appearance-none`}
+                className={`${inputClass} cursor-pointer appearance-none rounded-none`}
               >
-                <option value="Petrol">Petrol</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Hybrid">Hybrid</option>
-                <option value="Electric">Electric</option>
-                <option value="LPG">LPG</option>
+                <option value="Petrol" className="bg-black text-zinc-400">Petrol</option>
+                <option value="Diesel" className="bg-black text-zinc-400">Diesel</option>
+                <option value="Hybrid" className="bg-black text-zinc-400">Hybrid</option>
+                <option value="Electric" className="bg-black text-zinc-400">Electric</option>
+                <option value="LPG" className="bg-black text-zinc-400">LPG</option>
               </select>
             </div>
-          </div>
+        </div>
 
-          <div className="flex justify-end pt-2">
+        <div className="mt-12 flex justify-center md:justify-start">
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full md:w-auto bg-white text-black hover:bg-zinc-200 px-8 py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group shadow-lg shadow-white/5"
+              className="group relative inline-flex items-center gap-4 px-8 py-3 bg-white text-black rounded-full font-medium transition-all hover:pr-10 hover:bg-zinc-200 disabled:opacity-50 disabled:hover:pr-8"
             >
-              Run Analysis
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <span className="tracking-tight">Run Analysis</span>
+              <div className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center transition-transform group-hover:translate-x-1">
+                 <ArrowRight size={12} strokeWidth={3} />
+              </div>
             </button>
-          </div>
         </div>
       </form>
     </div>
