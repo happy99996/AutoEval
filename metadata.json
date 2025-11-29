@@ -1,0 +1,5 @@
+{
+  "name": "AutoEval AI",
+  "description": "A comprehensive vehicle evaluation dashboard leveraging Gemini Reasoning and Google Search to analyze car value, maintenance costs, and reliability.",
+  "requestFramePermissions": []
+}
