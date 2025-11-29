@@ -4,7 +4,7 @@ import VehicleInput from './components/VehicleInput';
 import Dashboard from './components/Dashboard';
 import ChatBot from './components/ChatBot';
 import { fetchMarketAnalysis, fetchDeepReasoning } from './services/geminiService';
-import { LayoutDashboard, Sparkles, AlertCircle } from 'lucide-react';
+import { Activity } from 'lucide-react';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,21 +14,19 @@ const App: React.FC = () => {
 
   const handleAnalyze = async (data: VehicleData) => {
     setIsLoading(true);
-    setLoadingMessage('Scanning market data & history...');
+    setLoadingMessage('Initializing market scan...');
     setVehicle(data);
     setAnalysis(null);
 
     try {
       // Step 1: Market Data
       const marketData = await fetchMarketAnalysis(data);
+      setLoadingMessage('Synthesizing reliability data...');
       
       // Step 2: Reasoning
-      setLoadingMessage('Analyzing reliability & common issues...');
       const deepAnalysis = await fetchDeepReasoning(data, marketData.text, marketData.sources);
+      setLoadingMessage('Finalizing detailed report...');
 
-      // Step 3: Compilation
-      setLoadingMessage('Generating maintenance roadmap & charts...');
-      
       const result: AnalysisResult = {
         searchSummary: marketData.text,
         sources: marketData.sources,
@@ -57,61 +55,62 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-surface text-gray-100 pb-20 relative">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col">
       
-      {/* Subtle Background Gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-blue-900/10 via-surface to-surface pointer-events-none z-0"></div>
-
-      {/* Clean Navbar */}
-      <header className="border-b border-white/5 bg-surface/80 backdrop-blur-md sticky top-0 z-40">
+      {/* Minimal Header */}
+      <header className="border-b border-zinc-800 bg-background/80 backdrop-blur-lg sticky top-0 z-40">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-             <div className="p-2 bg-primary/10 rounded-lg">
-                <LayoutDashboard className="text-primary" size={24} />
+          <div className="flex items-center gap-3">
+             <div className="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center">
+                <Activity size={18} strokeWidth={3} />
              </div>
-             <div>
-                <h1 className="text-xl font-display font-bold text-white tracking-wide">
-                  AutoEval
-                </h1>
-             </div>
+             <h1 className="text-lg font-display font-bold tracking-tight">
+               AutoEval<span className="text-zinc-500 font-normal">.AI</span>
+             </h1>
           </div>
           {isLoading && (
-            <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400">
-               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-               Processing
+            <div className="hidden md:flex items-center gap-3 text-xs font-medium text-zinc-400">
+               <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+               {loadingMessage}
             </div>
           )}
         </div>
       </header>
 
-      <main className="container mx-auto px-4 md:px-6 py-8 relative z-10">
+      <main className="flex-1 container mx-auto px-4 md:px-6 py-12 relative">
         
-        {/* Intro */}
-        <div className="max-w-4xl mx-auto mb-10">
+        {/* Hero / Input Section */}
+        <div className={`transition-all duration-700 ease-out ${analysis ? 'mb-12' : 'min-h-[60vh] flex flex-col justify-center'}`}>
           {!analysis && !isLoading && (
-            <div className="text-center mb-10 animate-fade-in pt-10">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-                Smart Vehicle Analysis
+            <div className="text-center mb-12 animate-fade-in">
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 tracking-tight">
+                Evaluate any vehicle.
               </h2>
-              <p className="text-secondary text-lg max-w-xl mx-auto">
-                Get instant value estimations, maintenance forecasts, and hidden reliability issues using AI.
+              <p className="text-secondary text-lg max-w-lg mx-auto leading-relaxed">
+                AI-powered insights on reliability, value projection, and hidden maintenance costs.
               </p>
             </div>
           )}
           
-          <VehicleInput onAnalyze={handleAnalyze} isLoading={isLoading} />
+          <div className="max-w-4xl mx-auto w-full">
+            <VehicleInput onAnalyze={handleAnalyze} isLoading={isLoading} />
+          </div>
         </div>
 
-        {/* Loading */}
-        {isLoading && (
-          <div className="max-w-2xl mx-auto mt-20 text-center animate-fade-in">
-             <div className="w-16 h-16 mx-auto mb-6 border-4 border-card rounded-full border-t-primary animate-spin"></div>
-             <h3 className="text-2xl font-display text-white mb-2">Analyzing Vehicle DNA</h3>
-             <p className="text-secondary text-lg transition-all duration-300 animate-pulse">{loadingMessage}</p>
+        {/* Loading Indicator */}
+        {isLoading && !analysis && (
+          <div className="max-w-md mx-auto text-center mt-12 animate-fade-in">
+             <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden mb-4">
+                <div className="h-full bg-white animate-progress origin-left w-1/2"></div>
+             </div>
+             <p className="text-zinc-400 text-sm animate-pulse">{loadingMessage}</p>
           </div>
         )}
 
-        {/* Dashboard */}
+        {/* Dashboard Results */}
         {vehicle && analysis && !isLoading && (
            <Dashboard vehicle={vehicle} analysis={analysis} />
         )}

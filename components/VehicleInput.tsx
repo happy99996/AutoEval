@@ -12,8 +12,8 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
     make: '',
     model: '',
     year: new Date().getFullYear(),
-    mileage: 0, // Default to 0 as it's no longer an input
-    price: 0,   // Default to 0 as it's no longer an input
+    mileage: 0, 
+    price: 0,
     currency: 'EUR',
     fuelType: 'Petrol'
   });
@@ -31,68 +31,65 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
     }));
   };
 
-  const inputClasses = "w-full bg-surface border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder-gray-600";
-  const labelClasses = "block text-secondary text-xs font-bold uppercase tracking-wider mb-2 ml-1";
+  // Minimalist Input Style
+  const inputContainerClass = "group bg-background rounded-xl px-4 py-3 border border-zinc-800 focus-within:border-zinc-600 focus-within:ring-1 focus-within:ring-zinc-600 transition-all duration-200";
+  const labelClass = "block text-[10px] text-zinc-500 uppercase font-bold tracking-wider mb-0.5 group-focus-within:text-primary transition-colors";
+  const inputClass = "w-full bg-transparent border-none p-0 text-white font-medium focus:ring-0 placeholder-zinc-700";
 
   return (
-    <div className={`glass-card rounded-2xl p-6 md:p-8 shadow-2xl transition-all duration-500 ${isLoading ? 'opacity-50 pointer-events-none scale-95' : 'opacity-100 scale-100'}`}>
+    <div className={`bg-surface border border-zinc-800 rounded-3xl p-6 md:p-8 shadow-2xl transition-all duration-700 ${isLoading ? 'opacity-50 blur-sm pointer-events-none' : 'opacity-100'}`}>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="flex items-center gap-2 mb-2">
-           <Search className="text-primary" size={20} />
-           <span className="text-lg font-display font-semibold text-white">General Model Evaluation</span>
-        </div>
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div className={inputContainerClass}>
+              <label className={labelClass}>Manufacturer</label>
+              <input
+                required
+                type="text"
+                name="make"
+                placeholder="e.g. Porsche"
+                value={formData.make}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <div>
-            <label className={labelClasses}>Manufacturer</label>
-            <input
-              required
-              type="text"
-              name="make"
-              placeholder="e.g. Audi"
-              value={formData.make}
-              onChange={handleChange}
-              className={inputClasses}
-            />
-          </div>
+            <div className={inputContainerClass}>
+              <label className={labelClass}>Model</label>
+              <input
+                required
+                type="text"
+                name="model"
+                placeholder="e.g. 911 Carrera"
+                value={formData.model}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
 
-          <div>
-            <label className={labelClasses}>Model</label>
-            <input
-              required
-              type="text"
-              name="model"
-              placeholder="e.g. A4 Avant"
-              value={formData.model}
-              onChange={handleChange}
-              className={inputClasses}
-            />
-          </div>
+            <div className={inputContainerClass}>
+              <label className={labelClass}>Year</label>
+               <input
+                required
+                type="number"
+                name="year"
+                min="1950"
+                max={new Date().getFullYear() + 1}
+                value={formData.year}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
 
-          <div>
-            <label className={labelClasses}>Year</label>
-             <input
-              required
-              type="number"
-              name="year"
-              min="1950"
-              max={new Date().getFullYear() + 1}
-              value={formData.year}
-              onChange={handleChange}
-              className={inputClasses}
-            />
-          </div>
-
-          <div>
-            <label className={labelClasses}>Fuel Type</label>
-            <div className="relative">
+            <div className={inputContainerClass}>
+              <label className={labelClass}>Powertrain</label>
               <select
                 name="fuelType"
                 value={formData.fuelType}
                 onChange={handleChange}
-                className={`${inputClasses} appearance-none cursor-pointer`}
+                className={`${inputClass} cursor-pointer appearance-none`}
               >
                 <option value="Petrol">Petrol</option>
                 <option value="Diesel">Diesel</option>
@@ -102,17 +99,17 @@ const VehicleInput: React.FC<Props> = ({ onAnalyze, isLoading }) => {
               </select>
             </div>
           </div>
-        </div>
 
-        <div className="pt-4 flex justify-end">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full md:w-auto bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 group"
-          >
-            Start Analysis
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </button>
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full md:w-auto bg-white text-black hover:bg-zinc-200 px-8 py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group shadow-lg shadow-white/5"
+            >
+              Run Analysis
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </form>
     </div>
